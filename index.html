@@ -8,8 +8,9 @@
   </head>
 
   <style>
+	
 		h1 {
-			color: mediumseagreen;
+			color: rgb(37, 66, 50);
 			text-align: center;
 		}
 
@@ -45,12 +46,39 @@
 			border-radius: 30%;
 		}
 
-		.btn {
+		.btn-m {
 			display: block;
 			width: 60%;
 			margin-bottom: 10px;
 			margin-left: auto;
 		}
+		
+		.full-window-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .centered-card {
+            margin-top: 20px;
+        }
+/* crop val */
+		.full-height-width {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .centered-card-val {
+            margin-top: 20px;
+            width: 18rem; /* You can adjust the width as needed */
+        }
 
 		@media (max-width: 768px) {
 			.text-left, .text-right {
@@ -63,12 +91,12 @@
 
 
 
-  <body style="background:#bfdfce">
+  <body style="background:#f9f9f9">
   <!--=======================navbar=====================================================-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 	  <!-- Brand -->
-	  <a class="navbar-brand" href="/">SMART FARMING</a>
+	  <a class="navbar-brand" href="/">Smart Farming</a>
   
 	  <!-- Toggler button for mobile view -->
 	  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,12 +113,12 @@
   
 		  <!-- Crop tab -->
 		  <li class="nav-item">
-			<a class="nav-link" href="#">Crop Recommendation</a>
+			<a class="nav-link" href="#crop-rec">Crop Recommendation</a>
 		  </li>
   
 		  <!-- Crop Val tab -->
 		  <li class="nav-item">
-			<a class="nav-link" href="">Crop Value Prediction</a>
+			<a class="nav-link" href="#crop-val">Crop Value Prediction</a>
 		  </li>
 		</ul>
 	  </div>
@@ -103,7 +131,7 @@
 	<!-- Title -->
 	<div class="row">
 		<div class="col-12 text-center">
-			<h1 class="my-4">Smart Farming</h1>
+			<h1 class="my-4 text-success">Smart Farming 🌱</h1>
 		</div>
 	</div>
 
@@ -116,14 +144,16 @@
 
 		<!-- Buttons -->
 		<div class="col-md-6 text-right">
-			<a href="crop-recommendations.html" class="btn btn-primary mb-2">Crop Recommendations</a>
-			<a href="crop-value.html" class="btn btn-primary mb-2">Crop Value</a>
+			<a href="#crop-rec" class="btn-m btn btn-primary mb-2">Crop Recommendations</a>
+			<a href="#crop-val" class="btn-m btn btn-primary mb-2">Crop Value</a>
 		</div>
 	</div>
 </div>
 <!--========================================================================================== -->
-  <div class="container my-3 mt-3">
-      <h1 class="text-success">Crop Recommendation System <span class="text-success">🌱</span></h1>
+
+
+<div class="full-window-container">
+	<h1 class="text-success text-center" id="crop-rec">Crop Recommendation System <span class="text-success">🌱</span></h1>
 
 <!--      adding form-->
       <form action="/predict" method="POST">
@@ -166,27 +196,79 @@
 
 
 
-           <div class="row mt-4">
-
-           <div class="col-md-12 text-center">
-				<button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
-			</div>
-			</div>
+            <!-- Submit Button - Center Aligned -->
+			<div class="row mt-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
+                </div>
+            </div>
       </form>
 
 
 
-       <!-- {% if result %} -->
-		<div class="card bg-dark" style="width: 18rem;">
-		  <img src="{{url_for('static', filename='img.jpg')}}" class="card-img-top" alt="...">
-		  <div class="card-body">
-			<h5 class="card-title">Recommend Crop for cultivation is:</h5>
-			<p class="card-text">{{ result }}</p>
-		  </div>
-		</div>
-	   <!-- {% endif %} -->
+       <!-- Result Card - Center Aligned -->
+        <!-- The result card will only be displayed if there is a result -->
+        <!-- {% if result %} -->
+        <div class="col-12 d-flex justify-content-center centered-card">
+            <div class="card bg-dark" style="width: 18rem;">
+                <img src="{{url_for('static', filename='img.jpg')}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Recommended Crop for Cultivation is:</h5>
+                    <p class="card-text">{{ result }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- {% endif %} -->
+    <!-- {% endif %} -->
   </div>
+<!-- ========================================================================= -->
 
+
+<div class="container-fluid full-height-width">
+
+	<div class="row justify-content-center align-items-center full-height-width">
+		<div class="col-12 text-center">
+			<h1 class="text-success" id="crop-val">Crop Value Prediction <span class="text-success">💹</span></h1>
+		</div>
+
+		<!-- Adding form for Crop Value Prediction -->
+		<form action="/predict-value" method="POST" class="w-100">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="CropName">Crop Name</label>
+                <input type="text" id="CropName" name="CropName" placeholder="Enter Crop Name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Month">Month</label>
+                <input type="text" id="Month" name="Month" placeholder="Enter Month" class="form-control" required>
+            </div>
+        </div>
+
+            <!-- Submit Button - Center Aligned -->
+			<div class="row mt-4">
+				<div class="col-md-12 d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary btn-lg">Predict Value</button>
+				</div>
+			</div>
+		</form>
+
+		<!-- Result Card for Crop Value Prediction -->
+		<!-- {% if result %} -->
+		<div class="col-12 d-flex justify-content-center">
+			<div class="card bg-dark centered-card-val">
+				<img src="{{url_for('static', filename='img.jpg')}}" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Recommended Crop for Cultivation is:</h5>
+					<p class="card-text">{{ result }}</p>
+				</div>
+			</div>
+		</div>
+		<!-- {% endif %} -->
+	</div>
+</div>
+
+
+<!-- =========================================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>
 </html>
